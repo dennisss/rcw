@@ -1,0 +1,14 @@
+/*
+ * Core and Platform Clocks:
+ * - Platform: 700MHz
+ * - Core: 2000MHz
+ */
+
+/* platform clock is system clock mul 14 div 2 = 700 */
+SYS_PLL_RAT=14
+
+/* core clocks are 2000 */
+CGA_PLL1_RAT=20
+CGA_PLL2_RAT=20
+CGB_PLL1_RAT=20
+CGB_PLL2_RAT=7

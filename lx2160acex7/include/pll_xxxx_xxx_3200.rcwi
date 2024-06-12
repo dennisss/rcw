@@ -1,0 +1,12 @@
+/*
+ * DDR Rate: 3200MHz
+ *
+ * DDR PHY Clock (half ddr clock, quarter mts rate)
+ * multiplier = 32 (32)
+ * divider = 4 (3)
+ * 100MHz x 32 / 4 = 800MHz (MTS = 4 x 800 = 3200MHz)
+ */
+MEM_PLL_RAT=32
+MEM_PLL_CFG=3
+MEM2_PLL_RAT=32
+MEM2_PLL_CFG=3

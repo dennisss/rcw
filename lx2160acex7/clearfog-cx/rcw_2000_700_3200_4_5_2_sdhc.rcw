@@ -1,0 +1,43 @@
+/*
+ * SerDes Protocol 1 -  4
+ * SerDes Protocol 2 -  5
+ * SerDes Protocol 3 -  2
+ *
+ * Frequencies:
+ * Core     -- 2000 MHz
+ * Platform -- 700  MHz
+ * DDR      -- 3200 MT/s
+ *
+ * Silicon 1.0
+ * Boot from SDHC
+ */
+
+#define LX_SR 1
+#define LX_BOOTSOURCE_SDHC
+
+#include <../lx2160asi/lx2160a.rcwi>
+#include <../lx2160acex7/include/pll_2000_700_xxxx.rcwi>
+#include <../lx2160acex7/include/pll_xxxx_xxx_3200.rcwi>
+#include <../lx2160acex7/include/common.rcwi>
+#include <../lx2160acex7/include/SD1_4.rcwi>
+#include <../lx2160acex7/include/SD2_5.rcwi>
+#include <../lx2160acex7/include/SD3_2.rcwi>
+#include <../lx2160acex7/include/common_pbi.rcwi>
+#include <../lx2160acex7/include/xspi_limit_17M.rcwi>
+#include <../lx2160acex7/include/bootlocptr.rcwi>
+
+#if 4 == 18 || 4 == -18
+/* protocol 18 2x-25g-6x-10g convert 2x10g-25g for 4x25g on qsfp */
+#include <../lx2160asi/sd1_lane_g_h_xfi_to_25g.rcw>
+/* set default serdes lane equalization parameters for 25G */
+#include <../lx2160asi/25g_eq_s1_lane_e.rcw>
+#include <../lx2160asi/25g_eq_s1_lane_f.rcw>
+#include <../lx2160asi/25g_eq_s1_lane_g.rcw>
+#include <../lx2160asi/25g_eq_s1_lane_h.rcw>
+#endif
+
+#if 4 == 20 || 4 == -20
+/* protocol 20 dual-40g split second port into 4x10g */
+#include <../lx2160asi/e40g2_split.rcw>
+#endif
+

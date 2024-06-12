@@ -1,0 +1,12 @@
+/*
+ * DDR Rate: 2666MHz
+ *
+ * DDR PHY Clock (half ddr clock, quarter mts rate)
+ * multiplier = 20 (20)
+ * divider = 3 (2)
+ * 100MHz x 20 / 3 = 666MHz (MTS = 4 x 666 = 2666MHz)
+ */
+MEM_PLL_RAT=20
+MEM_PLL_CFG=2
+MEM2_PLL_RAT=20
+MEM2_PLL_CFG=2

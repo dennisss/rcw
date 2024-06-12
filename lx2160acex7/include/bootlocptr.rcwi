@@ -1,0 +1,13 @@
+#if defined(LX_BOOTSOURCE_AUTO)
+/*
+ * For automatic boot-media selection ATF patches blockcopy and bootlocptr
+ * instructions in-place for all 3 supported boot media.
+ * Add the necessary jump instructions and placeholders.
+ */
+#include <../lx2160asi/bootlocptr_auto.rcw>
+#else
+/*
+ * ATF create_pbl will automatically append bootlocptr instructions,
+ * no need to include ../lx2160asi/bootlocptr_{nor,sd}.rcw
+ */
+#endif

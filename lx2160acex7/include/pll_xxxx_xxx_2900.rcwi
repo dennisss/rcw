@@ -1,0 +1,12 @@
+/*
+ * DDR Rate: 2900MHz
+ *
+ * DDR PHY Clock (half ddr clock, quarter mts rate)
+ * multiplier = 29 (29)
+ * divider = 4 (3)
+ * 100MHz x 29 / 4 = 725MHz (MTS = 4 x 725 = 2900MHz)
+ */
+MEM_PLL_RAT=29
+MEM_PLL_CFG=3
+MEM2_PLL_RAT=29
+MEM2_PLL_CFG=3

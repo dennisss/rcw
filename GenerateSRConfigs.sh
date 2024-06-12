@@ -48,3 +48,15 @@ generate() {
 		> "$rcw"
 	echo "Generated $rcw"
 }
+
+# generate LX2160A CEX-7 Clearfog-CX
+for DDR_SPEED in 2400 2600 2666 2900 3200; do
+	for SOC_REVISION in 1 2; do
+		for BOOTSOURCE in auto sdhc xspi; do
+			for SD1 in 4 8 8S 18 20; do
+				generate lx2160acex7_clearfog-cx.tmpl lx2160acex7 ${SOC_REVISION} clearfog-cx 2000 700 ${DDR_SPEED} ${SD1} 5 2 ${BOOTSOURCE}
+				generate lx2160acex7_clearfog-cx.tmpl lx2160acex7 ${SOC_REVISION} clearfog-cx 2200 750 ${DDR_SPEED} ${SD1} 5 2 ${BOOTSOURCE}
+			done
+		done
+	done
+done

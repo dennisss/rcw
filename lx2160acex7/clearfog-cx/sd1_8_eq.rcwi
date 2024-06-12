@@ -1,0 +1,39 @@
+/*
+ * SERDES tuning based on the following hardware -
+ * - SolidRun COM express type 7 revision 1.7 and newer
+ * - SolidRun ClearFog CX revision 1.3 with TI retimers and EPT COM express headers
+ */
+
+.pbi
+/* Lane E (SD1 TX/RX 3) */
+write 0x01EA0C28,0x00000000
+write 0x01EA0C30,0x20818120
+write 0x01EA0C34,0x23000000
+write 0x01EA0C68,0x80000000
+write 0x01EA0C74,0x00002020
+write 0x01EA0C80,0x00008000
+
+/* Lane F (SD1 TX/RX 2)*/
+write 0x01EA0D28,0x00000000
+write 0x01EA0D30,0x20818120
+write 0x01EA0D34,0x23000000
+write 0x01EA0D68,0x80000000
+write 0x01EA0D74,0x00002020
+write 0x01EA0D80,0x00008000
+
+/* Lane G (SD1 TX/RX 1)*/
+write 0x01EA0E28,0x00000000
+write 0x01EA0E30,0x20818120
+write 0x01EA0E34,0x23000000
+write 0x01EA0E68,0x80000000
+write 0x01EA0E74,0x00002020
+write 0x01EA0E80,0x00008000
+
+/* Lane H (SD1 TX/RX 0)*/
+write 0x01EA0F28,0x00000000
+write 0x01EA0F30,0x20818120
+write 0x01EA0F34,0x23000000
+write 0x01EA0F68,0x80000000
+write 0x01EA0F74,0x00002020
+write 0x01EA0F80,0x00008000
+.end

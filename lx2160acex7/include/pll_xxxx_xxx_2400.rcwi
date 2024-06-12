@@ -1,0 +1,12 @@
+/*
+ * DDR Rate: 2400MHz
+ *
+ * DDR PHY Clock (half ddr clock, quarter mts rate)
+ * multiplier = 24 (24)
+ * divider = 4 (3)
+ * 100MHz x 24 / 4 = 600MHz (MTS = 4 x 600 = 2400MHz)
+ */
+MEM_PLL_RAT=24
+MEM_PLL_CFG=3
+MEM2_PLL_RAT=24
+MEM2_PLL_CFG=3
