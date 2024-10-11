@@ -67,3 +67,9 @@ for SD1 in 2 18; do
 		generate lx2162asom_clearfog.tmpl lx2162asom 2 clearfog 2000 650 2900 ${SD1} ${SD2} 0 auto
 	done
 done
+
+# generate LX2160A CEX-6 Internal Evaluation Board
+for DDR_SPEED in 2400 2600 2900 3200; do
+	generate lx2160acex6_evb.tmpl lx2160acex6 2 evb 2000 700 ${DDR_SPEED} 3 3 2 auto
+	generate lx2160acex6_evb.tmpl lx2160acex6 2 evb 2200 750 ${DDR_SPEED} 3 3 2 auto
+done
