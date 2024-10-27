@@ -1,0 +1,25 @@
+/*
+ * SerDes Protocol 1 -  %SD1%
+ * SerDes Protocol 2 -  %SD2%
+ *
+ * Frequencies:
+ * Core     -- %CPU_SPEED% MHz
+ * Platform -- %BUS_SPEED%  MHz
+ * DDR      -- %DDR_SPEED% MT/s
+ *
+ * Silicon %SOC_REVISION%.0
+ * Boot from %BOOTSOURCE%
+ */
+
+#define LX_SR %SOC_REVISION%
+#define LX_BOOTSOURCE_%BOOTSOURCE%
+
+#include <../lx2160asi/lx2160a.rcwi>
+#include <../lx2160acex7/include/pll_%CPU_SPEED%_%BUS_SPEED%_xxxx.rcwi>
+#include <../lx2160acex7/include/pll_xxxx_xxx_%DDR_SPEED%.rcwi>
+#include <../%module%_rev%SOC_REVISION%/include/common.rcwi>
+#include <../%module%_rev%SOC_REVISION%/include/SD1_%SD1%.rcwi>
+#include <../%module%_rev%SOC_REVISION%/include/SD2_%SD2%.rcwi>
+#include <../lx2160acex7/include/SD3_0.rcwi>
+#include <../%module%_rev%SOC_REVISION%/include/common_pbi.rcwi>
+#include <../lx2160acex7/include/bootlocptr.rcwi>

@@ -1,0 +1,29 @@
+/* Serdes 2 Protocol 7: 2x10Gbps 4x1Gbps & 2x PCI-e x1 Gen 2 */
+SRDS_PRTCL_S2=7
+
+/* Enable Serdes 2 PLLF */
+SRDS_PLL_PD_PLL3=0
+
+/* Enable Serdes 2 PLLS */
+SRDS_PLL_PD_PLL4=0
+
+/* Don't use Serdes 2 PLLF for PLLS */
+SRDS_INTRA_REF_CLK_S2=0
+
+/*
+ * Select Serdes 2 PLLF frequency 100MHz for 1G (and pcie): Bit 0 = 0
+ * Select Serdes 2 PLLS frequency 156.25MHz for 10G mode: Bit 1 = 0
+ * (See QorIQ LX2162A Reference Manual, Rev. 1, 12/2021, 4.9.8.9 Reset Control Word (RCW) Register Descriptions, Bits 934-935)
+ */
+SRDS_PLL_REF_CLK_SEL_S2=0
+
+/* Support up to PCI-e Gen 2 */
+SRDS_DIV_PEX_S2=2
+
+/* Configure Ethernet Controllers 1+2 Pins as GPIOs to avoid competing for WRIO MACs 17+18 */
+EC1_PMUX=1
+EC2_PMUX=1
+
+/* indicate PCI ports for pbi section errata application*/
+#define HAVE_PEX3
+#define HAVE_PEX4

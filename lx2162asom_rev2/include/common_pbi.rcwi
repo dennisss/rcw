@@ -1,0 +1,41 @@
+/*
+ * LX2162A SoM Common Configuration
+ */
+
+/* Errata to write on scratch reg for validation */
+#include <../lx2160asi/scratchrw1.rcw>
+
+/* common PBI commands */
+#include <../lx2160asi/common.rcw>
+
+/* PCIe Errata A-009531, A-008851 */
+#ifdef HAVE_PEX1
+#include <../lx2160asi/a009531_PEX1.rcw>
+#include <../lx2160asi/a008851_PEX1.rcw>
+#endif
+#ifdef HAVE_PEX3
+#include <../lx2160asi/a009531_PEX3.rcw>
+#include <../lx2160asi/a008851_PEX3.rcw>
+#endif
+#ifdef HAVE_PEX4
+#include <../lx2160asi/a009531_PEX4.rcw>
+#include <../lx2160asi/a008851_PEX4.rcw>
+#endif
+
+/* SerDes Errata A-050479 */
+#include <../lx2160asi/a050479.rcw>
+
+/* PEX2/5/6 clock disable (not available on LX2162) */
+#include <../lx2162aqds/disable_pci2_5_6.rcw>
+
+/* USB2 clock disable (not available on LX2162) */
+#include <../lx2162aqds/disable_usb2.rcw>
+
+/* MAC7 to MAC10 clock disable (not available on LX2162) */
+#include <../lx2162aqds/disable_mac7_10.rcw>
+
+/* DDR2 clock disable*/
+#include <../lx2162aqds/disable_ddr2.rcw>
+
+/* Errata A-050426 */
+#include <../lx2160asi/a050426.rcw>

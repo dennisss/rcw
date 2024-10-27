@@ -60,3 +60,10 @@ for DDR_SPEED in 2400 2600 2666 2900 3200; do
 		done
 	done
 done
+
+# generate LX2162A CSoM Clearfog
+for SD1 in 2 18; do
+	for SD2 in 7 9 11; do
+		generate lx2162asom_clearfog.tmpl lx2162asom 2 clearfog 2000 650 2900 ${SD1} ${SD2} 0 auto
+	done
+done

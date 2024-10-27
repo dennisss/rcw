@@ -1,0 +1,20 @@
+/* Serdes 3 Protocol 0: Disabled */
+SRDS_PRTCL_S3=0
+
+/* Disable Serdes 3 PLLF */
+SRDS_PLL_PD_PLL5=1
+
+/* Disable Serdes 3 PLLF reference clock */
+SRDS_REFCLKF_DIS_S3=1
+
+/* Don't use Serdes 3 PLLF as reference for PLLS */
+SRDS_INTRA_REF_CLK_S3=0
+
+/* Disable Serdes 3 PLLS */
+SRDS_PLL_PD_PLL6=1
+
+/*
+ * Select Serdes 3 PLL Default Fequencies (don't care)
+ * (See QorIQ LX2162A Reference Manual, Rev. 1, 12/2021, 4.9.8.9 Reset Control Word (RCW) Register Descriptions, Bits 936-937)
+ */
+SRDS_PLL_REF_CLK_SEL_S3=0

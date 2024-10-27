@@ -1,0 +1,17 @@
+/* Serdes 1 Protocol 0: Disabled */
+SRDS_PRTCL_S1=0
+
+/* Disable Serdes 1 PLLF */
+SRDS_PLL_PD_PLL1=1
+
+/* Disable Serdes 1 PLLF reference clock */
+SRDS_REFCLKF_DIS_S2=1
+
+/* Don't use Serdes 1 PLLF as reference for PLLS */
+SRDS_INTRA_REF_CLK_S1=0
+
+/* Disable Serdes 1 PLLS */
+SRDS_PLL_PD_PLL2=1
+
+/* Select Serdes 1 PLL Default Fequencies (don't care) */
+SRDS_PLL_REF_CLK_SEL_S1=0

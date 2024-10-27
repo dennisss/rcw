@@ -1,0 +1,22 @@
+/*
+ * This conmfiguration requires changing reference clock on SoM U10 from 161MHz to 100MHz.
+ */
+
+/* Serdes 1 Protocol 2: 4x1Gbps */
+SRDS_PRTCL_S1=2
+
+/* Disable Serdes 1 PLLF */
+SRDS_PLL_PD_PLL1=1
+
+/* Enable Serdes 1 PLLS */
+SRDS_PLL_PD_PLL2=0
+
+/* Use Serdes 1 PLLF for PLLS (LX2162A has no physical input for PLLS) */
+SRDS_INTRA_REF_CLK_S1=1
+
+/*
+ * Select Serdes 1 PLLF frequency 100MHz for 1GE mode (don't care): Bit 0 = 0
+ * Select Serdes 1 PLLS frequency 100MHz for 1GE mode: Bit 1 = 0
+ * (See QorIQ LX2162A Reference Manual, Rev. 1, 12/2021, 4.9.8.9 Reset Control Word (RCW) Register Descriptions, Bits 932)
+ */
+SRDS_PLL_REF_CLK_SEL_S1=0

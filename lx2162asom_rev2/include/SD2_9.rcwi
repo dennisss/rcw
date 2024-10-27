@@ -1,0 +1,22 @@
+/* Serdes 2 Protocol 9: 8x1Gbps */
+SRDS_PRTCL_S2=9
+
+/* Disable Serdes 2 PLLF */
+SRDS_PLL_PD_PLL3=1
+
+/* Enable Serdes 2 PLLS */
+SRDS_PLL_PD_PLL4=0
+
+/* Use Serdes 2 PLLF for PLLS (to share PLLF 100MHz reference clock) */
+SRDS_INTRA_REF_CLK_S2=1
+
+/*
+ * Select Serdes 2 PLLF frequency 100MHz (don't care): Bit 0 = 0
+ * Select Serdes 2 PLLS frequency 100MHz for 1G mode: Bit 1 = 0
+ * (See QorIQ LX2162A Reference Manual, Rev. 1, 12/2021, 4.9.8.9 Reset Control Word (RCW) Register Descriptions, Bits 934-935)
+ */
+SRDS_PLL_REF_CLK_SEL_S2=0
+
+/* Configure Ethernet Controllers 1+2 Pins as GPIOs to avoid competing for WRIO MACs 17+18 */
+EC1_PMUX=1
+EC2_PMUX=1
