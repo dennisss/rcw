@@ -1,0 +1,50 @@
+#!/bin/bash -e
+
+generate() {
+	local template=${1}
+	local MODULE=${2}
+	local SOC_REVISION=${3}
+	local BOARD=${4}
+	local CPU_SPEED=${5}
+	local BUS_SPEED=${6}
+	local DDR_SPEED=${7}
+	local SD1=${8}
+	local SD2=${9}
+	local SD3=${10}
+	local BOOTSOURCE=${11}
+
+	local SOC_REVISION_SUFFIX="_rev${SOC_REVISION}"
+	if [ "${SOC_REVISION_SUFFIX}" = "_rev1" ]; then
+		SOC_REVISION_SUFFIX=
+	fi
+
+	local nSD1=${SD1}
+	if [[ $SD1 = *S ]]; then
+		nSD1=${SD1%S}
+	fi
+
+	local nSD2=${SD2}
+	if [[ $SD2 = *S ]]; then
+		nSD2=${SD2%S}
+	fi
+
+	local nSD3=${SD3}
+	if [[ $SD3 = *S ]]; then
+		nSD3=${SD3%S}
+	fi
+
+	local rcw="${MODULE,,}${SOC_REVISION_SUFFIX,,}/${BOARD,,}/rcw_${CPU_SPEED}_${BUS_SPEED}_${DDR_SPEED}_${SD1}_${SD2}_${SD3}_${BOOTSOURCE,,}.rcw"
+	cat "$template" | sed \
+		-e "s;%module%;${MODULE,,};g" -e "s;%MODULE%;${MODULE^^};g" \
+		-e "s;%SOC_REVISION%;${SOC_REVISION};g" \
+		-e "s;%board%;${BOARD,,};g" -e "s;%BOARD%;${BOARD^^};g" \
+		-e "s;%CPU_SPEED%;${CPU_SPEED};g" \
+		-e "s;%BUS_SPEED%;${BUS_SPEED};g" \
+		-e "s;%DDR_SPEED%;${DDR_SPEED};g" \
+		-e "s;%bootsource%;${BOOTSOURCE,,};g" -e "s;%BOOTSOURCE%;${BOOTSOURCE^^};g" \
+		-e "s;%SD1%;${SD1};g" -e "s;%nSD1%;${nSD1};g" \
+		-e "s;%SD2%;${SD2};g" -e "s;%nSD2%;${nSD2};g" \
+		-e "s;%SD3%;${SD3};g" -e "s;%nSD3%;${nSD3};g" \
+		> "$rcw"
+	echo "Generated $rcw"
+}
