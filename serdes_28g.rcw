@@ -59,6 +59,22 @@
 
 /* PCCD contains the protocol configuration for SXGMII/XFI */
 #define PCCC			(SRDS_BASE + 0x10B0)
+#define  SXGMIIGA_XFI(x)		(((x) << 31) & 0x80000000)
+#define  SXGMIIGB_XFI(x)		(((x) << 27) & 0x08000000)
+#define  SXGMIIGC_XFI(x)		(((x) << 23) & 0x00800000)
+#define  SXGMIIGD_XFI(x)		(((x) << 19) & 0x00080000)
+#define  SXGMIIGE_XFI(x)		(((x) << 15) & 0x00008000)
+#define  SXGMIIGF_XFI(x)		(((x) << 11) & 0x00000800)
+#define  SXGMIIGG_XFI(x)		(((x) << 7) & 0x00000080)
+#define  SXGMIIGH_XFI(x)		(((x) << 3) & 0x00000008)
+#define  SXGMIIGA_CFG(x)		(((x) << 28) & 0x70000000)
+#define  SXGMIIGB_CFG(x)		(((x) << 24) & 0x07000000)
+#define  SXGMIIGC_CFG(x)		(((x) << 20) & 0x00700000)
+#define  SXGMIIGD_CFG(x)		(((x) << 16) & 0x00070000)
+#define  SXGMIIGE_CFG(x)		(((x) << 12) & 0x00007000)
+#define  SXGMIIGF_CFG(x)		(((x) << 8) & 0x00000700)
+#define  SXGMIIGG_CFG(x)		(((x) << 4) & 0x00000070)
+#define  SXGMIIGH_CFG(x)		((x) & 0x00000007)
 
 /* PCCD contains the protocol configuration for E25G */
 #define PCCD			(SRDS_BASE + 0x10B4)
@@ -75,6 +91,8 @@
 #define PCCE			(SRDS_BASE + 0x10B8)
 #define  E100GB_CFG(x)		(((x) << 8) & 0x00000700)
 #define  E100GA_CFG(x)		(((x) << 12) & 0x000007000)
+#define  E40GB_CFG(x)		(((x) << 24) & 0x07000000)
+#define  E40GA_CFG(x)		(((x) << 28) & 0x070000000)
 
 #define PEXaCR0(a)		(SRDS_BASE + (0x40 * (a)) + 0x1200)
 

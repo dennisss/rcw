@@ -1,0 +1,68 @@
+/*
+ * Split the 40G MAC.2 into 4 x 10G MAC
+ *
+ * NOTICE: The DPC file must be updated as below in order for the MC firmware
+ * to pick up on the change.
+ *
+ * board_info {
+ *	serdes {
+ *		/* Do not rely on the RCW protocol number, but rather read
+ *		 * the protocol status registers (PSSR) for each SerDes
+ *		 * block. That information will be used to enable/disable
+ *		 * the appropriate MACs.
+ *		 */
+/*		follow_hw_pssr;
+ *	};
+ * };
+ */
+#define SRDS_BASE 0x1ea0000 /* SerDes 1 */
+#include <../serdes_28g.rcw>
+
+.pbi
+/* Issue a halt request on all the lanes (A-D) */
+write LNmTRSTCTL(0), T_HLT_REQ(1)
+write LNmRRSTCTL(0), R_HLT_REQ(1)
+
+write LNmTRSTCTL(1), T_HLT_REQ(1)
+write LNmRRSTCTL(1), R_HLT_REQ(1)
+
+write LNmTRSTCTL(2), T_HLT_REQ(1)
+write LNmRRSTCTL(2), R_HLT_REQ(1)
+
+write LNmTRSTCTL(3), T_HLT_REQ(1)
+write LNmRRSTCTL(3), R_HLT_REQ(1)
+
+wait 100
+
+/* Convert Lanes to be configured for 10G. Only the LNmGCR0 needs to be
+ * updated, all other per lane registers are the same between 10G and 40G.
+ */
+write LNmGCR0(0), PORT_RST_LEFT(0) | PORT_LN0_B(0) | PROTO_SEL(0xA) | IF_WIDTH(0x2)
+write LNmGCR0(1), PORT_RST_LEFT(0) | PORT_LN0_B(0) | PROTO_SEL(0xA) | IF_WIDTH(0x2)
+write LNmGCR0(2), PORT_RST_LEFT(0) | PORT_LN0_B(0) | PROTO_SEL(0xA) | IF_WIDTH(0x2)
+write LNmGCR0(3), PORT_RST_LEFT(0) | PORT_LN0_B(0) | PROTO_SEL(0xA) | IF_WIDTH(0x2)
+
+/* Configure the PCC registers */
+/* Only the 40G MAC.1 will remain enabled. PCCE: 0x11000000 -> 0x10000000 */
+write PCCE, E40GA_CFG(1)
+
+/* Enable the 10G protocol converters for  XFI. PCCE: 0x00000000 -> 0x00009999 */
+write PCCC, SXGMIIGA_CFG(1) | SXGMIIGB_CFG(1) | SXGMIIGC_CFG(1) | SXGMIIGD_CFG(1) | SXGMIIGA_XFI(1) | SXGMIIGB_XFI(1) | SXGMIIGC_XFI(1) | SXGMIIGD_XFI(1)
+
+/* Issue a reset request on all the lanes (E-H) */
+write LNmTRSTCTL(0), T_RST_REQ(1)
+write LNmRRSTCTL(0), R_RST_REQ(1)
+
+write LNmTRSTCTL(1), T_RST_REQ(1)
+write LNmRRSTCTL(1), R_RST_REQ(1)
+
+write LNmTRSTCTL(2), T_RST_REQ(1)
+write LNmRRSTCTL(2), R_RST_REQ(1)
+
+write LNmTRSTCTL(3), T_RST_REQ(1)
+write LNmRRSTCTL(3), R_RST_REQ(1)
+
+wait 100
+.end
+
+#undef SRDS_BASE
