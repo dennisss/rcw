@@ -1,0 +1,30 @@
+/*
+ * Serdes 2 Reference Clocks:
+ * - PLLF = 100MHz
+ * - PLLS = 100MHz
+ */
+
+/* Serdes 2 Protocol 9: 8x1Gbps */
+SRDS_PRTCL_S2=9
+
+/* Enable PLLF */
+SRDS_PLL_PD_PLL3=0
+
+/* Don't use PLLF for PLLS */
+SRDS_INTRA_REF_CLK_S2=0
+
+/* Enable PLLS */
+SRDS_PLL_PD_PLL4=0
+
+/*
+ * Select PLLF frequency 100MHz: Bit 0 = 0
+ * Select PLLS frequency 100MHz: Bit 1 = 0
+ * (See QorIQ LX2160A Reference Manual, Rev. 0, 07/2020, 4.9.8.9 Reset Control Word (RCW) Register Descriptions, Bits 934-935)
+ */
+SRDS_PLL_REF_CLK_SEL_S2=0
+
+/* Support up to PCI-e Gen 3 */
+SRDS_DIV_PEX_S2=1
+
+/* Configure Ethernet Controller 1 Pins as GPIOs to avoid competing for WRIO MAC 17 */
+EC1_PMUX=1
