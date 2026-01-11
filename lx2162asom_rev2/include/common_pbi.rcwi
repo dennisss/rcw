@@ -34,9 +34,6 @@
 /* USB2 clock disable (not available on LX2162) */
 #include <../lx2162aqds/disable_usb2.rcw>
 
-/* MAC7 to MAC10 clock disable (not available on LX2162) */
-#include <../lx2162aqds/disable_mac7_10.rcw>
-
 /* DDR2 clock disable*/
 #include <../lx2162aqds/disable_ddr2.rcw>
 
