@@ -1,0 +1,31 @@
+/*
+ * SerDes Protocol 1 -  3
+ * SerDes Protocol 2 -  9
+ *
+ * Frequencies:
+ * Core     -- 2000 MHz
+ * Platform -- 650  MHz
+ * DDR      -- 2900 MT/s
+ *
+ * Silicon 2.0
+ * Boot from AUTO
+ */
+
+#define LX_SR 2
+#define LX_BOOTSOURCE_AUTO
+
+#include <../lx2160asi/lx2160a.rcwi>
+#include <../lx2160acex7/include/pll_2000_650_xxxx.rcwi>
+#include <../lx2160acex7/include/pll_xxxx_xxx_2900.rcwi>
+#include <../lx2162asom_rev2/include/common.rcwi>
+#include <../lx2162asom_rev2/include/SD1_3.rcwi>
+#include <../lx2162asom_rev2/include/SD2_9.rcwi>
+#include <../lx2160acex7/include/SD3_0.rcwi>
+#include <../lx2162asom_rev2/include/common_pbi.rcwi>
+#include <../lx2160acex7/include/bootlocptr.rcwi>
+
+#if 3 == 18 || 3 == -18
+/* set default serdes lane equalization parameters for 25G */
+#include <../lx2160asi/25g_eq_s1_lane_e.rcw>
+#include <../lx2160asi/25g_eq_s1_lane_f.rcw>
+#endif
