@@ -29,11 +29,6 @@
 #if 20 == 18 || 20 == -18
 /* protocol 18 2x-25g-6x-10g convert 2x10g-25g for 4x25g on qsfp */
 #include <../lx2160asi/sd1_lane_g_h_xfi_to_25g.rcw>
-/* set default serdes lane equalization parameters for 25G */
-#include <../lx2160asi/25g_eq_s1_lane_e.rcw>
-#include <../lx2160asi/25g_eq_s1_lane_f.rcw>
-#include <../lx2160asi/25g_eq_s1_lane_g.rcw>
-#include <../lx2160asi/25g_eq_s1_lane_h.rcw>
 #endif
 
 #if 20 == 20 || 20 == -20

@@ -23,9 +23,3 @@
 #include <../lx2160acex7/include/SD3_0.rcwi>
 #include <../lx2162asom_rev2/include/common_pbi.rcwi>
 #include <../lx2160acex7/include/bootlocptr.rcwi>
-
-#if 2 == 18 || 2 == -18
-/* set default serdes lane equalization parameters for 25G */
-#include <../lx2160asi/25g_eq_s1_lane_e.rcw>
-#include <../lx2160asi/25g_eq_s1_lane_f.rcw>
-#endif
