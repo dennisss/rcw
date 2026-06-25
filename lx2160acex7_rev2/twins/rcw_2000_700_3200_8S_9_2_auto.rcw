@@ -23,4 +23,5 @@
 #include <../lx2160acex7/include/SD2_9.rcwi>
 #include <../lx2160acex7/include/SD3_2.rcwi>
 #include <../lx2160acex7/include/common_pbi.rcwi>
+#include <../lx2160asi/sd2_lane_a_e_disable_sgmii.rcw>
 #include <../lx2160acex7/include/bootlocptr.rcwi>

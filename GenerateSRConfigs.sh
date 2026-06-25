@@ -78,5 +78,6 @@ done
 
 # generate LX2160A CEX-7 Internal Twins Board
 for DDR_SPEED in 2400 2600 2666 2900 3200; do
+	generate lx2160acex7_half-twins.tmpl lx2160acex7 2 half-twins 2000 700 ${DDR_SPEED} 8S 9 2 auto
 	generate lx2160acex7_twins.tmpl lx2160acex7 2 twins 2000 700 ${DDR_SPEED} 8S 9 2 auto
 done

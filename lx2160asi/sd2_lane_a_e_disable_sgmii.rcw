@@ -1,0 +1,34 @@
+/* Convert the SD#2 LANE A and E to SGMII */
+#define SRDS_BASE 0x1eb0000 /* SerDes 2 */
+#include <../serdes_28g.rcw>
+#define  T_STP_REQ(x)		(((x) << 26) & 0x04000000)
+#define  T_DIS(x)		(((x) << 24) & 0x01000000)
+#define  R_STP_REQ(x)		(((x) << 26) & 0x04000000)
+#define  R_DIS(x)		(((x) << 24) & 0x01000000)
+
+.pbi
+/* Issue a stop request on the lanes */
+write LNmTRSTCTL(0), T_STP_REQ(1)
+write LNmRRSTCTL(0), R_STP_REQ(1)
+write LNmTRSTCTL(4), T_STP_REQ(1)
+write LNmRRSTCTL(4), R_STP_REQ(1)
+wait 100
+
+/* disable the lanes */
+write LNmTRSTCTL(0), T_DIS(1)
+write LNmRRSTCTL(0), R_DIS(1)
+write LNmTRSTCTL(4), T_DIS(1)
+write LNmRRSTCTL(4), R_DIS(1)
+wait 100
+
+/* Disable MAC.1, MAC.2, MAC.11, MAC.15 from the DEVDISR register */
+// bits (1 << 0) | (1 << 1) | (1 << 10) | (1 << 14)
+write 0x1e00074, 0x4403
+
+/* disable the protocol converters SGMIIA, SGMIIE */
+write PCC8, 0x01110111
+write SGMIIaCR1(0), MDEV_PORT(0) | SGMIICR1_MAGIC
+write SGMIIaCR1(4), MDEV_PORT(0) | SGMIICR1_MAGIC
+.end
+
+#undef SRDS_BASE
