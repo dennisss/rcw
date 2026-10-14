@@ -1,0 +1,12 @@
+/*
+ * DDR Rate: 1600MHz
+ *
+ * DDR PHY Clock (half ddr clock, quarter mts rate)
+ * multiplier = 16 (16)
+ * divider = 4 (3)
+ * 100MHz x 16 / 4 = 400MHz (MTS = 4 x 400 = 1600MHz)
+ */
+MEM_PLL_RAT=16
+MEM_PLL_CFG=3
+MEM2_PLL_RAT=16
+MEM2_PLL_CFG=3

@@ -1,0 +1,38 @@
+/*
+ * SerDes Protocol 1 -  20
+ * SerDes Protocol 2 -  5
+ * SerDes Protocol 3 -  2
+ *
+ * Frequencies:
+ * Core     -- 2200 MHz
+ * Platform -- 750  MHz
+ * DDR      -- 1866 MT/s
+ *
+ * Silicon 2.0
+ * Boot from XSPI
+ */
+
+#define LX_SR 2
+#define LX_BOOTSOURCE_XSPI
+
+#include <../lx2160asi/lx2160a.rcwi>
+#include <../lx2160acex7/include/pll_2200_750_xxxx.rcwi>
+#include <../lx2160acex7/include/pll_xxxx_xxx_1866.rcwi>
+#include <../lx2160acex7/include/common.rcwi>
+#include <../lx2160acex7/include/SD1_20.rcwi>
+#include <../lx2160acex7/include/SD2_5.rcwi>
+#include <../lx2160acex7/include/SD3_2.rcwi>
+#include <../lx2160acex7/include/common_pbi.rcwi>
+#include <../lx2160acex7/include/xspi_limit_17M.rcwi>
+#include <../lx2160acex7/include/bootlocptr.rcwi>
+
+#if 20 == 18 || 20 == -18
+/* protocol 18 2x-25g-6x-10g convert 2x10g-25g for 4x25g on qsfp */
+#include <../lx2160asi/sd1_lane_g_h_xfi_to_25g.rcw>
+#endif
+
+#if 20 == 20 || 20 == -20
+/* protocol 20 dual-40g split second port into 4x10g */
+#include <../lx2160asi/e40g2_split.rcw>
+#endif
+

@@ -50,7 +50,7 @@ generate() {
 }
 
 # generate LX2160A CEX-7 Clearfog-CX
-for DDR_SPEED in 2400 2600 2666 2900 3200; do
+for DDR_SPEED in 1600 1866 2133 2400 2600 2666 2900 3200; do
 	for SOC_REVISION in 1 2; do
 		for BOOTSOURCE in auto sdhc xspi; do
 			for SD1 in 4 8 8S 18 20; do
@@ -71,13 +71,13 @@ for SD1 in 2 3 18; do
 done
 
 # generate LX2160A CEX-6 Internal Evaluation Board
-for DDR_SPEED in 2400 2600 2900 3200; do
+for DDR_SPEED in 1600 1866 2133 2400 2600 2900 3200; do
 	generate lx2160acex6_evb.tmpl lx2160acex6 2 evb 2000 700 ${DDR_SPEED} 3 3 2 auto
 	generate lx2160acex6_evb.tmpl lx2160acex6 2 evb 2200 750 ${DDR_SPEED} 3 3 2 auto
 done
 
 # generate LX2160A CEX-7 Internal Twins Board
-for DDR_SPEED in 2400 2600 2666 2900 3200; do
+for DDR_SPEED in 1600 1866 2133 2400 2600 2666 2900 3200; do
 	generate lx2160acex7_half-twins.tmpl lx2160acex7 2 half-twins 2000 700 ${DDR_SPEED} 8S 9 2 auto
 	generate lx2160acex7_twins.tmpl lx2160acex7 2 twins 2000 700 ${DDR_SPEED} 8S 9 2 auto
 done

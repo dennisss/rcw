@@ -1,0 +1,12 @@
+/*
+ * DDR Rate: 1866MHz
+ *
+ * DDR PHY Clock (half ddr clock, quarter mts rate)
+ * multiplier = 14 (14)
+ * divider = 3 (2)
+ * 100MHz x 14 / 3 = 466.6MHz (MTS = 4 x 466 = 1866MHz)
+ */
+MEM_PLL_RAT=14
+MEM_PLL_CFG=2
+MEM2_PLL_RAT=14
+MEM2_PLL_CFG=2

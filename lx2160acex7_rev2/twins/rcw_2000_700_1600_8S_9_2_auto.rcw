@@ -1,0 +1,27 @@
+/*
+ * SerDes Protocol 1 -  8S
+ * SerDes Protocol 2 -  9
+ * SerDes Protocol 3 -  2
+ *
+ * Frequencies:
+ * Core     -- 2000 MHz
+ * Platform -- 700  MHz
+ * DDR      -- 1600 MT/s
+ *
+ * Silicon 2.0
+ * Boot from AUTO
+ */
+
+#define LX_SR 2
+#define LX_BOOTSOURCE_AUTO
+
+#include <../lx2160asi/lx2160a.rcwi>
+#include <../lx2160acex7/include/pll_2000_700_xxxx.rcwi>
+#include <../lx2160acex7/include/pll_xxxx_xxx_1600.rcwi>
+#include <../lx2160acex7/include/common.rcwi>
+#include <../lx2160acex7/include/SD1_8S.rcwi>
+#include <../lx2160acex7/include/SD2_9.rcwi>
+#include <../lx2160acex7/include/SD3_2.rcwi>
+#include <../lx2160acex7/include/common_pbi.rcwi>
+#include <../lx2160asi/sd2_lane_a_e_disable_sgmii.rcw>
+#include <../lx2160acex7/include/bootlocptr.rcwi>
