@@ -18,7 +18,11 @@ $1: $2
 	$(PREPROCESSOR) $2 | sed -e 's|%littleendian64b=1||g' > $1
 endef
 
-rcw_sources := $(wildcard */*.rcw)
+# RCW sources, relative to this directory; a board Makefile can point this at
+# generated sources elsewhere (then also set RCW_SRC_PREFIX, which is stripped
+# from the paths when installing)
+rcw_sources ?= $(wildcard */*.rcw)
+RCW_SRC_PREFIX ?=
 
 # Maintain compatibility with byte_swap.tcl by creating a $(rcw).bin.swapped
 # file if it contains the %littleendian64b=1 directive.
@@ -46,7 +50,7 @@ all: $(targets)
 install: $(targets)
 	$(INSTALL) -d $(DESTDIR)
 	@for file in $^; do \
-		$(INSTALL) -m 644 -D $$file $(DESTDIR)/$$file; \
+		$(INSTALL) -m 644 -D $$file $(DESTDIR)/$${file#$(RCW_SRC_PREFIX)}; \
 	done
 	$(INSTALL) -m 644 -D README $(DESTDIR)
 

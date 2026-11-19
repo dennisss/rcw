@@ -12,16 +12,32 @@ BOARDS = b4420qds b4860qds \
 	 t1024qds t1023rdb t1024rdb t1040rdb t1042rdb t1042rdb_pi t1040qds \
 	 t2080rdb t2080qds t2081qds t4240qds t4240rdb t1040d4rdb t1042d4rdb
 
-VER = $(shell git describe --tags)
+VER = $(shell git describe --tags 2>/dev/null)
+
+# SolidRun modules: their RCW sources are generated from the *.tmpl templates
+# by GenerateSRConfigs.sh into $(SR_GEN_DIR) (ignored by git) before building.
+SR_BOARDS = lx2160acex6_rev2 lx2160acex7 lx2160acex7_rev2 lx2162asom_rev2
+SR_GEN_DIR = build
+SR_GEN_STAMP = $(SR_GEN_DIR)/.generated
+
+$(SR_GEN_STAMP): GenerateSRConfigs.sh $(wildcard *.tmpl)
+	rm -rf $(SR_GEN_DIR)
+	./GenerateSRConfigs.sh $(SR_GEN_DIR) > /dev/null
+	touch $@
+
+generate: $(SR_GEN_STAMP)
+
+all install: $(if $(filter $(SR_BOARDS),$(BOARDS)),$(SR_GEN_STAMP))
 
 all install clean:
 	@for board in $(BOARDS); do \
 		$(MAKE) -C $$board $@ DESTDIR=$(DESTDIR)/$$board; \
 	done
+	$(if $(filter clean,$@),rm -rf $(SR_GEN_DIR))
 
 release: $(foreach board,$(BOARDS),rcw-$(board)-$(VER).tar.gz)
 
 $(foreach board,$(BOARDS),rcw-$(board)-$(VER).tar.gz): rcw-%-$(VER).tar.gz:
 	git archive --format=tar HEAD --prefix rcw- $* | gzip -9 > $@
 
-.PHONY: all install clean release $(foreach board,$(BOARDS),rcw-$(board)-$(VER).tar.gz)
+.PHONY: all install clean generate release $(foreach board,$(BOARDS),rcw-$(board)-$(VER).tar.gz)

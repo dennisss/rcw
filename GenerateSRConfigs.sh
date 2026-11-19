@@ -1,4 +1,16 @@
 #!/bin/bash -e
+#
+# Generate the SolidRun RCW source files (*.rcw) for every supported
+# CPU/bus/DDR speed, SerDes protocol and boot source combination from the
+# *.tmpl templates.
+#
+# usage: GenerateSRConfigs.sh [OUTDIR]
+#
+# Output goes to OUTDIR/<module>[_rev<N>]/<board>/rcw_*.rcw (default OUTDIR:
+# build). The generated files are build artifacts and are not committed; the
+# Makefiles of the SolidRun modules compile them from there (see Makefile).
+
+OUTDIR="${1:-build}"
 
 generate() {
 	local template=${1}
@@ -33,7 +45,8 @@ generate() {
 		nSD3=${SD3%S}
 	fi
 
-	local rcw="${MODULE,,}${SOC_REVISION_SUFFIX,,}/${BOARD,,}/rcw_${CPU_SPEED}_${BUS_SPEED}_${DDR_SPEED}_${SD1}_${SD2}_${SD3}_${BOOTSOURCE,,}.rcw"
+	local rcw="${OUTDIR}/${MODULE,,}${SOC_REVISION_SUFFIX,,}/${BOARD,,}/rcw_${CPU_SPEED}_${BUS_SPEED}_${DDR_SPEED}_${SD1}_${SD2}_${SD3}_${BOOTSOURCE,,}.rcw"
+	mkdir -p "$(dirname "$rcw")"
 	cat "$template" | sed \
 		-e "s;%module%;${MODULE,,};g" -e "s;%MODULE%;${MODULE^^};g" \
 		-e "s;%SOC_REVISION%;${SOC_REVISION};g" \
