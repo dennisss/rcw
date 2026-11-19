@@ -1,0 +1,97 @@
+/*
+ * SerDes Protocol 1 -  %SD1%
+ * SerDes Protocol 2 -  %SD2%
+ * SerDes Protocol 3 -  %SD3%
+ *
+ * Frequencies:
+ * Core     -- %CPU_SPEED% MHz
+ * Platform -- %BUS_SPEED%  MHz
+ * DDR      -- %DDR_SPEED% MT/s
+ *
+ * Silicon %SOC_REVISION%.0
+ * Boot from %BOOTSOURCE%
+ */
+
+#define LX_SR %SOC_REVISION%
+#define LX_BOOTSOURCE_%BOOTSOURCE%
+
+#include <../lx2160asi/lx2160a.rcwi>
+#include <../%module%/include/pll_%CPU_SPEED%_%BUS_SPEED%_xxxx.rcwi>
+#include <../%module%/include/pll_xxxx_xxx_%DDR_SPEED%.rcwi>
+#include <../%module%/include/common.rcwi>
+#include <../%module%/include/SD1_%SD1%.rcwi>
+#include <../%module%/include/SD2_%SD2%.rcwi>
+/* Use EC1 as RGMII1 for on-module AR8035 (Port 0) on WRIOP MAC 17 */
+EC1_PMUX=0
+#include <../%module%/include/SD3_%SD3%.rcwi>
+#include <../%module%/include/common_pbi.rcwi>
+#include <../serdes_28g.rcw>
+#define  T_STP_REQ(x)		(((x) << 26) & 0x04000000)
+#define  T_DIS(x)		(((x) << 24) & 0x01000000)
+#define  R_STP_REQ(x)		(((x) << 26) & 0x04000000)
+#define  R_DIS(x)		(((x) << 24) & 0x01000000)
+#define  R_DAT_INV(x)		(((x) << 31) & 0x80000000)
+#define  R_USE_PLL(x)		(((x) << 28) & 0x10000000)
+#define  R_N_RATE(x)		(((x) << 24) & 0x07000000)
+
+/*
+ * 1. Invert RX polarity (DAT_INV=1) on SerDes 1 physical lanes 0-2 (SFP0-2) and make sure
+ *    the RX halves of physical lanes 0-3 (SFP0-3) use the same PLL and rate as their TX halves.
+ *    NOTE: SerDes 1 register lane letters are reversed w.r.t. physical lanes:
+ *    physical lane 0/1/2/3 = register lane H/G/F/E = LNm index 7/6/5/4 (MAC 3/4/5/6).
+ *    - Protocol 3, 8:  XFI.3-6 on PLLS (10.3125G clock net), full rate
+ *    - Protocol 21:    25GE.3-6 on PLLF (12.890625G clock net), double rate
+ * 2. Protocol 21 only: physical lanes 6/7 (register lanes B/A, 25GE.9/10) are routed to the
+ *    PCIe slot lanes 2/3 on this carrier, so disable their transmitters.
+ * 3. Disable SerDes 2 Lane C (SGMIIC) so it does not compete with EC1 for WRIOP MAC 17
+ */
+#define LX2R_SD1_PROTOCOL %SD1%
+#if LX2R_SD1_PROTOCOL == 21
+#define SFP_RX_PLL_RATE		(R_USE_PLL(0) | R_N_RATE(3))
+#else
+#define SFP_RX_PLL_RATE		(R_USE_PLL(1) | R_N_RATE(0))
+#endif
+
+#define SD1_BASE 0x1ea0000
+#define SD2_BASE 0x1eb0000
+.pbi
+#define SRDS_BASE SD1_BASE
+write LNmRRSTCTL(7), R_HLT_REQ(1)
+write LNmRRSTCTL(6), R_HLT_REQ(1)
+write LNmRRSTCTL(5), R_HLT_REQ(1)
+write LNmRRSTCTL(4), R_HLT_REQ(1)
+#undef SRDS_BASE
+#define SRDS_BASE SD2_BASE
+write LNmTRSTCTL(2), T_STP_REQ(1)
+write LNmRRSTCTL(2), R_STP_REQ(1)
+wait 100
+write LNmTRSTCTL(2), T_DIS(1)
+write LNmRRSTCTL(2), R_DIS(1)
+#undef SRDS_BASE
+#define SRDS_BASE SD1_BASE
+write LNmRGCR0(7), R_DAT_INV(1) | SFP_RX_PLL_RATE
+write LNmRGCR0(6), R_DAT_INV(1) | SFP_RX_PLL_RATE
+write LNmRGCR0(5), R_DAT_INV(1) | SFP_RX_PLL_RATE
+write LNmRGCR0(4), R_DAT_INV(0) | SFP_RX_PLL_RATE
+write LNmRRSTCTL(7), R_RST_REQ(1)
+write LNmRRSTCTL(6), R_RST_REQ(1)
+write LNmRRSTCTL(5), R_RST_REQ(1)
+write LNmRRSTCTL(4), R_RST_REQ(1)
+wait 100
+#if LX2R_SD1_PROTOCOL == 21
+/* lanes are not in use yet, so skip the stop handshake to stay within the RCW size limit */
+write LNmTRSTCTL(1), T_DIS(1)
+write LNmTRSTCTL(0), T_DIS(1)
+#endif
+#undef SRDS_BASE
+#define SRDS_BASE SD2_BASE
+write PCC8, 0x11011111
+write SGMIIaCR1(2), MDEV_PORT(0) | SGMIICR1_MAGIC
+.end
+#undef SRDS_BASE
+#undef SD1_BASE
+#undef SD2_BASE
+#undef SFP_RX_PLL_RATE
+#undef LX2R_SD1_PROTOCOL
+#include <../%module%/include/xspi_limit_17M.rcwi>
+#include <../%module%/include/bootlocptr.rcwi>

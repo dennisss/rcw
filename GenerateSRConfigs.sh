@@ -94,3 +94,15 @@ for DDR_SPEED in 1600 1866 2133 2400 2600 2666 2900 3200; do
 	generate lx2160acex7_half-twins.tmpl lx2160acex7 2 half-twins 2000 700 ${DDR_SPEED} 8S 9 2 auto
 	generate lx2160acex7_twins.tmpl lx2160acex7 2 twins 2000 700 ${DDR_SPEED} 8S 9 2 auto
 done
+
+# generate LX2160A CEX-7 Router Board
+for DDR_SPEED in 1600 1866 2133 2400 2600 2666 2900 3200; do
+	for SOC_REVISION in 1 2; do
+		for BOOTSOURCE in auto sdhc xspi; do
+			for SD1 in 3 8 21; do
+				generate lx2160acex7_router.tmpl lx2160acex7 ${SOC_REVISION} router 2000 700 ${DDR_SPEED} ${SD1} 9 3 ${BOOTSOURCE}
+				generate lx2160acex7_router.tmpl lx2160acex7 ${SOC_REVISION} router 2200 750 ${DDR_SPEED} ${SD1} 9 3 ${BOOTSOURCE}
+			done
+		done
+	done
+done
